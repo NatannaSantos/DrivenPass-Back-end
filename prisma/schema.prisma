@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
+  password   String
+  credential Credential[]
+  secureNote SecureNote[]
+  card       Card[]
+  WiFis      WiFi[]
+
+  @@map("users")
+}
+
+model Credential {
+  id       Int    @id @default(autoincrement())
+  user     User   @relation(fields: [userId], references: [id])
+  userId   Int
+  url      String
+  title    String @unique
+  userName String
+  password String
+
+  @@map("credentials")
+}
+
+model SecureNote {
+  id         Int    @id @default(autoincrement())
+  user       User   @relation(fields: [userId], references: [id])
+  userId     Int
+  title      String @unique @db.VarChar(50)
+  annotation String @db.VarChar(1000)
+
+  @@map("secureNotes")
+}
+
+enum TypeCard {
+  credit
+  debit
+  both
+}
+
+model Card {
+  id             Int      @id @default(autoincrement())
+  user           User     @relation(fields: [userId], references: [id])
+  userId         Int
+  number         String
+  name           String
+  securityCode   String
+  expirationDate DateTime @db.Timestamptz()
+  password       String
+  isVirtual      Boolean  @default(false)
+  type           TypeCard
+  title          String   @unique
+
+  @@map("cards")
+}
+
+model WiFi {
+  id       Int    @id @default(autoincrement())
+  user     User   @relation(fields: [userId], references: [id])
+  userId   Int
+  name     String
+  password String
+  title    String
+
+  @@map("wifis")
+}
