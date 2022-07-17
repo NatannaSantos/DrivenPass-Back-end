@@ -15,7 +15,25 @@ async function insert(credentialData:CredentialData){
     })
 }
 
+async function findByUserId(userId:number){
+    return prisma.credential.findMany({
+        where:{
+            userId
+        }
+    })
+}
+
+async function findById(id:number){
+    return prisma.credential.findFirst({
+        where:{
+            id
+        }
+    })
+}
+
 export default {
     findByTitle,
-    insert
+    insert,
+    findByUserId,
+    findById
 }

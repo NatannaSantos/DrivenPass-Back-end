@@ -4,9 +4,25 @@ import * as credentialService from "../services/credentialService.js"
 export async function createCredential(req:Request, res:Response){
     const credential = req.body;
     const {user} = res.locals;
-    console.log("user em controller",user);
-
+    
     await credentialService.createCredential({...credential,userId:user.id});
 
     return res.sendStatus(201);
+}
+
+export async function findCredential(req:Request, res:Response){
+    const {user} = res.locals;
+
+    const credential = await credentialService.findCredential(user.id);
+
+    return res.status(200).send(credential);
+}
+
+export async function findCredentialById(req:Request,res:Response){
+    const {user} = res.locals;
+    const {id}=req.params;
+
+    const credential = await credentialService.findCredentialById(Number(id),user.id);
+
+    return res.status(200).send(credential);
 }
