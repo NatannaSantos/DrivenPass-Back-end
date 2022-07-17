@@ -26,3 +26,12 @@ export async function findCredentialById(req:Request,res:Response){
 
     return res.status(200).send(credential);
 }
+
+export async function deleteCredential(req:Request,res:Response){
+    const {user} = res.locals;
+    const {id} = req.params;
+
+    await credentialService.deleteCredential(user.id,Number(id));
+
+    return res.sendStatus(200);
+}

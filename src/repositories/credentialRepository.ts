@@ -31,9 +31,18 @@ async function findById(id:number){
     })
 }
 
+async function deleteById(id:number){
+    return prisma.credential.delete({
+        where:{
+            id
+        }
+    })
+}
+
 export default {
     findByTitle,
     insert,
     findByUserId,
-    findById
+    findById,
+    deleteById
 }

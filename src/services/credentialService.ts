@@ -47,6 +47,21 @@ export async function findCredentialById(id: number, userId: number) {
     return ({...existingCredential,password:decryptPassword});
 }
 
+export async function deleteCredential(userId:number, id:number){
+    const existingCredential = await credentialRepository.findById(id);
+    console.log("existingCredential",existingCredential);
+    if (!existingCredential) throw notFoundError("there are no credentials");
+
+    if (existingCredential) {
+        if (existingCredential.userId !== userId) {
+            throw notFoundError("there are no credentials for this user")
+        }
+    }
+
+    console.log("id",id);
+    await credentialRepository.deleteById(id);
+}
+
 function createReturnObject(existingCredential: Credential[]) {
     const cryptr = new Cryptr('fdjshghjfsdg');
 
