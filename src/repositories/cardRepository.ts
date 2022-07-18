@@ -1,22 +1,21 @@
 import { prisma } from "../database.js";
-import { createSecureNoteData } from "../services/secureNoteService.js";
 
-async function findByTitle(title:string){
-    return prisma.secureNote.findFirst({
-        where:{
+async function findByTitle(title: string) {
+    return prisma.card.findFirst({
+        where: {
             title
         }
     })
 }
 
-async function insert(createSecureNoteData:createSecureNoteData){
-    return prisma.secureNote.create({
-        data:createSecureNoteData
+async function insert(cardData){
+    return prisma.card.create({
+        data:cardData
     })
 }
 
 async function findByUserId(userId:number){
-    return prisma.secureNote.findMany({
+    return prisma.card.findMany({
         where:{
             userId
         }
@@ -24,7 +23,7 @@ async function findByUserId(userId:number){
 }
 
 async function findById(id:number){
-    return prisma.secureNote.findFirst({
+    return prisma.card.findFirst({
         where:{
             id
         }
@@ -32,12 +31,13 @@ async function findById(id:number){
 }
 
 async function deleteById(id:number){
-    return prisma.secureNote.delete({
+    return prisma.card.delete({
         where:{
             id
         }
     })
 }
+
 export default {
     findByTitle,
     insert,
