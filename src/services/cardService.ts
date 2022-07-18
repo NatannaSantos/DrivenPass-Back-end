@@ -24,13 +24,13 @@ export async function createCard(cardData: CardData) {
 
 }
 
-// export async function findCredential(userId: number) {
-//     const existingCredential = await credentialRepository.findByUserId(userId);
+export async function findCard(userId: number) {
+    const existingCard = await cardRepository.findByUserId(userId);
 
-//     if (!existingCredential) throw notFoundError("there are no credentials for this user");
-//     const credential = createReturnObject(existingCredential);
-//     return (credential);
-// }
+    if (!existingCard) throw notFoundError("there are no credentials for this user");
+    const card = createReturnObject(existingCard);
+    return (card);
+}
 
 // export async function findCredentialById(id: number, userId: number) {
 //     const existingCredential = await credentialRepository.findById(id);
@@ -61,12 +61,13 @@ export async function createCard(cardData: CardData) {
 //     await credentialRepository.deleteById(id);
 // }
 
-// function createReturnObject(existingCredential: Credential[]) {
-//     const cryptr = new Cryptr('fdjshghjfsdg');
+function createReturnObject(existingCard: Card[]) {
+    const cryptr = new Cryptr('fdjshghjfsdg');
 
-//     const credential = existingCredential.map((credential) => {
-//         const decryptPassword = cryptr.decrypt(credential.password);
-//         return { ...credential, password: decryptPassword };
-//     });
-//     return credential;
-// }
+    const card = existingCard.map((card) => {
+        const decryptPassword = cryptr.decrypt(card.password);
+        const decryptSecurityCode = cryptr.decrypt(card.securityCode);
+        return { ...card, securityCode:decryptSecurityCode,password: decryptPassword };
+    });
+    return card;
+}

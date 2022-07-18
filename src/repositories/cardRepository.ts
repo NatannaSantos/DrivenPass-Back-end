@@ -1,4 +1,5 @@
 import { prisma } from "../database.js";
+import { CardData } from "../services/cardService.js";
 
 async function findByTitle(title: string) {
     return prisma.card.findFirst({
@@ -8,7 +9,7 @@ async function findByTitle(title: string) {
     })
 }
 
-async function insert(cardData){
+async function insert(cardData:CardData){
     return prisma.card.create({
         data:cardData
     })

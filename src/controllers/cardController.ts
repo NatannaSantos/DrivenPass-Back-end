@@ -10,13 +10,13 @@ export async function createCard(req:Request, res:Response){
     return res.sendStatus(201);
 }
 
-// export async function findCredential(req:Request, res:Response){
-//     const {user} = res.locals;
+export async function findCard(req:Request, res:Response){
+    const {user} = res.locals;
 
-//     const credential = await credentialService.findCredential(user.id);
+    const card = await cardService.findCard(user.id);
 
-//     return res.status(200).send(credential);
-// }
+    return res.status(200).send(card);
+}
 
 // export async function findCredentialById(req:Request,res:Response){
 //     const {user} = res.locals;

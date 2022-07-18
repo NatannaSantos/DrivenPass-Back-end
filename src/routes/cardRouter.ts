@@ -7,5 +7,6 @@ import { ensureAuthenticationMiddleware } from "../middlewares/ensureAuthenticat
 const cardRouter = Router();
 
 cardRouter.post("/cards",validateSchemaMiddleware(cardSchema),ensureAuthenticationMiddleware,cardController.createCard);
+cardRouter.get("/cards",ensureAuthenticationMiddleware,cardController.findCard);
 
 export default cardRouter;
