@@ -49,7 +49,6 @@ export async function findCredentialById(id: number, userId: number) {
 
 export async function deleteCredential(userId:number, id:number){
     const existingCredential = await credentialRepository.findById(id);
-    console.log("existingCredential",existingCredential);
     if (!existingCredential) throw notFoundError("there are no credentials");
 
     if (existingCredential) {

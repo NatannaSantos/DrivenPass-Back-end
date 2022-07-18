@@ -1,5 +1,5 @@
 import { SecureNote } from "@prisma/client";
-import { conflictError } from "../../utils/errorUtils.js";
+import { conflictError, notFoundError } from "../../utils/errorUtils.js";
 import secureNoteRepository from "../repositories/secureNoteRepository.js";
 
 export type createSecureNoteData = Omit <SecureNote,"id">
@@ -15,4 +15,25 @@ export async function create(createSecureNoteData:createSecureNoteData){
 
 
    await secureNoteRepository.insert(createSecureNoteData);
+}
+
+export async function findSecureNote(userId:number){
+    const existingSecureNote = await secureNoteRepository.findByUserId(userId);
+
+    if (!existingSecureNote) throw notFoundError ("there are no secure notes for this user");
+    
+    return existingSecureNote;
+}
+
+export async function findSecureNoteById(id: number, userId: number) {
+    const existingSecureNote = await secureNoteRepository.findById(id);
+    if (!existingSecureNote) throw notFoundError("there are no credentials");
+    
+    if (existingSecureNote) {
+        if (existingSecureNote.userId !== userId) {
+            throw notFoundError("there are no credentials for this user")
+        }
+    }
+    return existingSecureNote;
+
 }
