@@ -1,6 +1,8 @@
 import Joi from "joi";
+import { WifiData } from "../services/wifiService";
 
-const wifiSchema = Joi.object({
+type WifiSchemaData = Omit <WifiData, "userId">;
+const wifiSchema = Joi.object<WifiSchemaData>({
     name:Joi.string().required(),
     password:Joi.string().required(),
     title:Joi.string().required()

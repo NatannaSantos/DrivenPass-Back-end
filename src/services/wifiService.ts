@@ -22,51 +22,51 @@ export async function createWifi(wifiData: WifiData) {
 
 }
 
-// export async function findCard(userId: number) {
-//     const existingCard = await cardRepository.findByUserId(userId);
+export async function findWifi(userId: number) {
+    const existingWifi = await wifiRepository.findByUserId(userId);
 
-//     if (!existingCard) throw notFoundError("there are no cards for this user");
-//     const card = createReturnObject(existingCard);
-//     return (card);
-// }
+    if (!existingWifi) throw notFoundError("there are no wifis for this user");
+    const wifi = createReturnObject(existingWifi);
+    return (wifi);
+}
 
-// export async function findCardById(id: number, userId: number) {
-//     const existingCard = await cardRepository.findById(id);
-//     if (!existingCard) throw notFoundError("there are no cards");
-//     const cryptr = new Cryptr('fdjshghjfsdg');
+export async function findWifiById(id: number, userId: number) {
+    const existingWifi = await wifiRepository.findById(id);
+    if (!existingWifi) throw notFoundError("there are no wifis");
+    const cryptr = new Cryptr('fdjshghjfsdg');
 
-//     if (existingCard) {
-//         if (existingCard.userId !== userId) {
-//             throw notFoundError("there are no cards for this user")
-//         }
-//     }
+    if (existingWifi) {
+        if (existingWifi.userId !== userId) {
+            throw notFoundError("there are no wifis for this user")
+        }
+    }
 
-//     const decryptPassword = cryptr.decrypt(existingCard.password); 
-//     const decryptSecurityCode = cryptr.decrypt(existingCard.securityCode);
-//     return ({...existingCard,securityCode:decryptSecurityCode, password:decryptPassword});
-// }
+    const decryptPassword = cryptr.decrypt(existingWifi.password); 
+    
+    return ({...existingWifi,password:decryptPassword});
+}
 
-// export async function deleteCard(userId:number, id:number){
-//     const existingCard = await cardRepository.findById(id);
-//     if (!existingCard) throw notFoundError("there are no credentials");
+export async function deleteWifi(userId:number, id:number){
+    const existingWifi = await wifiRepository.findById(id);
+    if (!existingWifi) throw notFoundError("there are no wifis");
 
-//     if (existingCard) {
-//         if (existingCard.userId !== userId) {
-//             throw notFoundError("there are no credentials for this user")
-//         }
-//     }
+    if (existingWifi) {
+        if (existingWifi.userId !== userId) {
+            throw notFoundError("there are no wifis for this user")
+        }
+    }
 
-//     console.log("id",id);
-//     await cardRepository.deleteById(id);
-// }
+    console.log("id",id);
+    await wifiRepository.deleteById(id);
+}
 
-// function createReturnObject(existingCard: Card[]) {
-//     const cryptr = new Cryptr('fdjshghjfsdg');
+function createReturnObject(existingWifi: WiFi[]) {
+    const cryptr = new Cryptr('fdjshghjfsdg');
 
-//     const card = existingCard.map((card) => {
-//         const decryptPassword = cryptr.decrypt(card.password);
-//         const decryptSecurityCode = cryptr.decrypt(card.securityCode);
-//         return { ...card, securityCode:decryptSecurityCode,password: decryptPassword };
-//     });
-//     return card;
-// }
+    const wifi = existingWifi.map((wifi) => {
+        const decryptPassword = cryptr.decrypt(wifi.password);
+        
+        return { ...wifi, password: decryptPassword };
+    });
+    return wifi;
+}

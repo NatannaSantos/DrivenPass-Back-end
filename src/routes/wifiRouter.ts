@@ -7,5 +7,8 @@ import * as wifiController from "../controllers/wifiController.js";
 const wifiRouter = Router();
 
 wifiRouter.post("/wifis",validateSchemaMiddleware(wifiSchema),ensureAuthenticationMiddleware, wifiController.createWifi);
+wifiRouter.get("/wifis",ensureAuthenticationMiddleware, wifiController.findWifi);
+wifiRouter.get("/wifis/:id/wifi",ensureAuthenticationMiddleware, wifiController.findWifiById);
+wifiRouter.delete("/wifis/:id/wifi",ensureAuthenticationMiddleware, wifiController.deleteWifi);
 
 export default wifiRouter;

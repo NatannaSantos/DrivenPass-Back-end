@@ -10,28 +10,28 @@ export async function createWifi(req:Request, res:Response){
     return res.sendStatus(201);
 }
 
-// export async function findCard(req:Request, res:Response){
-//     const {user} = res.locals;
+export async function findWifi(req:Request, res:Response){
+    const {user} = res.locals;
 
-//     const card = await cardService.findCard(user.id);
+    const wifi = await wifiService.findWifi(user.id);
 
-//     return res.status(200).send(card);
-// }
+    return res.status(200).send(wifi);
+}
 
-// export async function findCardById(req:Request,res:Response){
-//     const {user} = res.locals;
-//     const {id}=req.params;
+export async function findWifiById(req:Request,res:Response){
+    const {user} = res.locals;
+    const {id}=req.params;
 
-//     const card = await cardService.findCardById(Number(id),user.id);
+    const wifi = await wifiService.findWifiById(Number(id),user.id);
 
-//     return res.status(200).send(card);
-// }
+    return res.status(200).send(wifi);
+}
 
-// export async function deleteCard(req:Request,res:Response){
-//     const {user} = res.locals;
-//     const {id} = req.params;
+export async function deleteWifi(req:Request,res:Response){
+    const {user} = res.locals;
+    const {id} = req.params;
 
-//     await cardService.deleteCard(user.id,Number(id));
+    await wifiService.deleteWifi(user.id,Number(id));
 
-//     return res.sendStatus(200);
-// }
+    return res.sendStatus(200);
+}

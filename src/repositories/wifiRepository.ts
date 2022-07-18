@@ -1,4 +1,5 @@
 import { prisma } from "../database.js";
+import { WifiData } from "../services/wifiService.js";
 
 async function findByTitle(title: string) {
     return prisma.wiFi.findFirst({
@@ -8,7 +9,7 @@ async function findByTitle(title: string) {
     })
 }
 
-async function insert(wifiData){
+async function insert(wifiData: WifiData){
     return prisma.wiFi.create({
         data:wifiData
     })
