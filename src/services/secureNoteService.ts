@@ -27,7 +27,7 @@ export async function findSecureNote(userId:number){
 
 export async function findSecureNoteById(id: number, userId: number) {
     const existingSecureNote = await secureNoteRepository.findById(id);
-    if (!existingSecureNote) throw notFoundError("there are no credentials");
+    if (!existingSecureNote) throw notFoundError("there are no secure note");
     
     if (existingSecureNote) {
         if (existingSecureNote.userId !== userId) {
@@ -36,4 +36,17 @@ export async function findSecureNoteById(id: number, userId: number) {
     }
     return existingSecureNote;
 
+}
+
+export async function deleteSecureNote(userId:number, id:number){
+    const existingSecureNote = await secureNoteRepository.findById(id);
+    if (!existingSecureNote) throw notFoundError("there are no secure note");
+
+    if (existingSecureNote) {
+        if (existingSecureNote.userId !== userId) {
+            throw notFoundError("there are no credentials for this user")
+        }
+    }
+
+   await secureNoteRepository.deleteById(id);
 }

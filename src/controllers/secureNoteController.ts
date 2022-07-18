@@ -28,3 +28,12 @@ export async function findSecureNoteById(req:Request,res:Response){
 
     return res.status(200).send(secureNote);
 }
+
+export async function deleteSecureNote(req:Request,res:Response){
+    const {user} = res.locals;
+    const {id} = req.params;
+
+    await secureNoteService.deleteSecureNote(user.id,Number(id));
+
+    return res.sendStatus(200);
+}
