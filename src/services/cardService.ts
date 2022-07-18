@@ -32,20 +32,21 @@ export async function findCard(userId: number) {
     return (card);
 }
 
-// export async function findCredentialById(id: number, userId: number) {
-//     const existingCredential = await credentialRepository.findById(id);
-//     if (!existingCredential) throw notFoundError("there are no credentials");
-//     const cryptr = new Cryptr('fdjshghjfsdg');
+export async function findCardById(id: number, userId: number) {
+    const existingCard = await cardRepository.findById(id);
+    if (!existingCard) throw notFoundError("there are no credentials");
+    const cryptr = new Cryptr('fdjshghjfsdg');
 
-//     if (existingCredential) {
-//         if (existingCredential.userId !== userId) {
-//             throw notFoundError("there are no credentials for this user")
-//         }
-//     }
+    if (existingCard) {
+        if (existingCard.userId !== userId) {
+            throw notFoundError("there are no credentials for this user")
+        }
+    }
 
-//     const decryptPassword = cryptr.decrypt(existingCredential.password); 
-//     return ({...existingCredential,password:decryptPassword});
-// }
+    const decryptPassword = cryptr.decrypt(existingCard.password); 
+    const decryptSecurityCode = cryptr.decrypt(existingCard.securityCode);
+    return ({...existingCard,securityCode:decryptSecurityCode, password:decryptPassword});
+}
 
 // export async function deleteCredential(userId:number, id:number){
 //     const existingCredential = await credentialRepository.findById(id);

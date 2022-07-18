@@ -18,14 +18,14 @@ export async function findCard(req:Request, res:Response){
     return res.status(200).send(card);
 }
 
-// export async function findCredentialById(req:Request,res:Response){
-//     const {user} = res.locals;
-//     const {id}=req.params;
+export async function findCardById(req:Request,res:Response){
+    const {user} = res.locals;
+    const {id}=req.params;
 
-//     const credential = await credentialService.findCredentialById(Number(id),user.id);
+    const card = await cardService.findCardById(Number(id),user.id);
 
-//     return res.status(200).send(credential);
-// }
+    return res.status(200).send(card);
+}
 
 // export async function deleteCredential(req:Request,res:Response){
 //     const {user} = res.locals;
