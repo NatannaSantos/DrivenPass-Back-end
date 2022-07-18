@@ -27,11 +27,11 @@ export async function findCardById(req:Request,res:Response){
     return res.status(200).send(card);
 }
 
-// export async function deleteCredential(req:Request,res:Response){
-//     const {user} = res.locals;
-//     const {id} = req.params;
+export async function deleteCard(req:Request,res:Response){
+    const {user} = res.locals;
+    const {id} = req.params;
 
-//     await credentialService.deleteCredential(user.id,Number(id));
+    await cardService.deleteCard(user.id,Number(id));
 
-//     return res.sendStatus(200);
-// }
+    return res.sendStatus(200);
+}

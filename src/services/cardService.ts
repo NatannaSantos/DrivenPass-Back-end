@@ -27,19 +27,19 @@ export async function createCard(cardData: CardData) {
 export async function findCard(userId: number) {
     const existingCard = await cardRepository.findByUserId(userId);
 
-    if (!existingCard) throw notFoundError("there are no credentials for this user");
+    if (!existingCard) throw notFoundError("there are no cards for this user");
     const card = createReturnObject(existingCard);
     return (card);
 }
 
 export async function findCardById(id: number, userId: number) {
     const existingCard = await cardRepository.findById(id);
-    if (!existingCard) throw notFoundError("there are no credentials");
+    if (!existingCard) throw notFoundError("there are no cards");
     const cryptr = new Cryptr('fdjshghjfsdg');
 
     if (existingCard) {
         if (existingCard.userId !== userId) {
-            throw notFoundError("there are no credentials for this user")
+            throw notFoundError("there are no cards for this user")
         }
     }
 
@@ -48,19 +48,19 @@ export async function findCardById(id: number, userId: number) {
     return ({...existingCard,securityCode:decryptSecurityCode, password:decryptPassword});
 }
 
-// export async function deleteCredential(userId:number, id:number){
-//     const existingCredential = await credentialRepository.findById(id);
-//     if (!existingCredential) throw notFoundError("there are no credentials");
+export async function deleteCard(userId:number, id:number){
+    const existingCard = await cardRepository.findById(id);
+    if (!existingCard) throw notFoundError("there are no credentials");
 
-//     if (existingCredential) {
-//         if (existingCredential.userId !== userId) {
-//             throw notFoundError("there are no credentials for this user")
-//         }
-//     }
+    if (existingCard) {
+        if (existingCard.userId !== userId) {
+            throw notFoundError("there are no credentials for this user")
+        }
+    }
 
-//     console.log("id",id);
-//     await credentialRepository.deleteById(id);
-// }
+    console.log("id",id);
+    await cardRepository.deleteById(id);
+}
 
 function createReturnObject(existingCard: Card[]) {
     const cryptr = new Cryptr('fdjshghjfsdg');
