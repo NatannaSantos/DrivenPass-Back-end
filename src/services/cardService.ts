@@ -3,11 +3,11 @@ import { conflictError, notFoundError } from "../../utils/errorUtils.js";
 import Cryptr from "cryptr";
 import cardRepository from "../repositories/cardRepository.js";
 
-export type CardData = Omit <Card, "id">
+export type CardData = Omit<Card, "id">
 
 export async function createCard(cardData: CardData) {
     const existingCard = await cardRepository.findByTitle(cardData.title);
-    
+
     if (existingCard) {
         if (existingCard.userId === cardData.userId) {
             throw conflictError("existing title");
@@ -20,7 +20,7 @@ export async function createCard(cardData: CardData) {
 
     const encryptedPassword = cryptr.encrypt(cardData.password);
 
-    await cardRepository.insert({ ...cardData, securityCode:encryptedsecurityCode, password: encryptedPassword });
+    await cardRepository.insert({ ...cardData, securityCode: encryptedsecurityCode, password: encryptedPassword });
 
 }
 
@@ -43,12 +43,12 @@ export async function findCardById(id: number, userId: number) {
         }
     }
 
-    const decryptPassword = cryptr.decrypt(existingCard.password); 
+    const decryptPassword = cryptr.decrypt(existingCard.password);
     const decryptSecurityCode = cryptr.decrypt(existingCard.securityCode);
-    return ({...existingCard,securityCode:decryptSecurityCode, password:decryptPassword});
+    return ({ ...existingCard, securityCode: decryptSecurityCode, password: decryptPassword });
 }
 
-export async function deleteCard(userId:number, id:number){
+export async function deleteCard(userId: number, id: number) {
     const existingCard = await cardRepository.findById(id);
     if (!existingCard) throw notFoundError("there are no credentials");
 
@@ -58,7 +58,6 @@ export async function deleteCard(userId:number, id:number){
         }
     }
 
-    console.log("id",id);
     await cardRepository.deleteById(id);
 }
 
@@ -68,7 +67,7 @@ function createReturnObject(existingCard: Card[]) {
     const card = existingCard.map((card) => {
         const decryptPassword = cryptr.decrypt(card.password);
         const decryptSecurityCode = cryptr.decrypt(card.securityCode);
-        return { ...card, securityCode:decryptSecurityCode,password: decryptPassword };
+        return { ...card, securityCode: decryptSecurityCode, password: decryptPassword };
     });
     return card;
 }

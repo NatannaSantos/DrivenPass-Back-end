@@ -24,7 +24,7 @@ async function findByUserId(userId:number){
 }
 
 async function findById(id:number){
-    return prisma.credential.findFirst({
+       return prisma.credential.findFirst({
         where:{
             id
         }

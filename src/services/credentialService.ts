@@ -7,14 +7,12 @@ export type CredentialData = Omit<Credential, "id">
 
 export async function createCredential(credentialData: CredentialData) {
     const existingCredential = await credentialRepository.findByTitle(credentialData.title);
-    console.log("credencial para criar", existingCredential);
-    console.log("credencial data", credentialData);
+
     if (existingCredential) {
         if (existingCredential.userId === credentialData.userId) {
             throw conflictError("existing title");
         }
     }
-
 
     const cryptr = new Cryptr('fdjshghjfsdg');
 
@@ -43,11 +41,11 @@ export async function findCredentialById(id: number, userId: number) {
         }
     }
 
-    const decryptPassword = cryptr.decrypt(existingCredential.password); 
-    return ({...existingCredential,password:decryptPassword});
+    const decryptPassword = cryptr.decrypt(existingCredential.password);
+    return ({ ...existingCredential, password: decryptPassword });
 }
 
-export async function deleteCredential(userId:number, id:number){
+export async function deleteCredential(userId: number, id: number) {
     const existingCredential = await credentialRepository.findById(id);
     if (!existingCredential) throw notFoundError("there are no credentials");
 
@@ -57,7 +55,6 @@ export async function deleteCredential(userId:number, id:number){
         }
     }
 
-    console.log("id",id);
     await credentialRepository.deleteById(id);
 }
 

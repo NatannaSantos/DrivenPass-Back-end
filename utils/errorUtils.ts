@@ -1,8 +1,8 @@
 type AppErrorsTypes = "conflict"|"not_found"|"unauthorized"|"wrong_schema";
 
 export interface AppError {
-    type: AppErrorsTypes,
-    message: string
+    type: AppErrorsTypes;
+    message: string;
 }
 
 export function isAppError(error:object): error is AppError {
